@@ -11,6 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 class Invoice extends Mailable
 {
+    // send email to the client
+
     use Queueable, SerializesModels;
 
     /**

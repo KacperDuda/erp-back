@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\EnvTestController;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -21,4 +24,10 @@ Route::get('/', function (Request $request) {
     dd($request->host());
 });
 
-Route::get('test', [EnvTestController::class, 'testBoth']);
+//login: admin@admin.pl
+//password: admin
+
+Route::get('test', function (Request $request) {
+
+});
+

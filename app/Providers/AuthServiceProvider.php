@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +25,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // grant all access for admin users
+        Gate::before(function(User $user, string $ability) {
+           if($user->is_admin) {
+               return true;
+           }
+        });
+
+        Gate::define('entry:add', [UserPolicy::class, 'entryAdd']);
     }
 }
