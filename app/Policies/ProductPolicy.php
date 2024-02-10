@@ -8,12 +8,18 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
+    public function before(User $user,string $ability) {
+        if($user->tokenCan('product:all')) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->tokenCan('product:viewAny');
     }
 
     /**
@@ -21,7 +27,7 @@ class ProductPolicy
      */
     public function view(User $user, Product $product): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -29,7 +35,7 @@ class ProductPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->tokenCan('product:modify');
     }
 
     /**
@@ -37,7 +43,8 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
-        //
+        return $user->tokenCan('product:modify');
+
     }
 
     /**
@@ -45,7 +52,8 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product): bool
     {
-        //
+        return $user->tokenCan('product:modify');
+
     }
 
     /**
@@ -53,7 +61,7 @@ class ProductPolicy
      */
     public function restore(User $user, Product $product): bool
     {
-        //
+        return $user->tokenCan('product:modify');
     }
 
     /**
@@ -61,6 +69,6 @@ class ProductPolicy
      */
     public function forceDelete(User $user, Product $product): bool
     {
-        //
+        return $user->tokenCan('product:modify');
     }
 }

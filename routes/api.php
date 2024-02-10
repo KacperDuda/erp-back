@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,36 +22,13 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
     Route::prefix('auth')->group(function() {
         Route::get('user', [AuthController::class, 'user']);
         Route::get('token', [AuthController::class, 'token']);
+
         // unauthorized are allowed to access this place
-        Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:sanctum');
+        Route::post('login', [AuthController::class, 'login'])
+            ->withoutMiddleware('auth:sanctum');
     });
+
+    Route::apiResources([
+        'products' => ProductController::class
+    ]);
 });
-
-
-
-
-
-
-
-
-
-
-if(env('APP_ENV') == "local") {
-    Route::get('getAdminToken', function (Request $request) {
-        $user = User::findOrFail(1);
-        $token = $user->createToken('admin_token', $user->abilities);
-
-        return ['token' => $token->plainTextToken];
-    })->withoutMiddleware('csrf');
-
-    Route::get('restart', function (Request $request) {
-        User::create([
-            'name' =>'Admin',
-            'email' => 'admin@admin.pl',
-            'password' => Hash::make('admin'),
-            'is_admin' => true,
-            'abilities' => ['users:modify']
-        ]);
-    })->withoutMiddleware('csrf');
-
-}

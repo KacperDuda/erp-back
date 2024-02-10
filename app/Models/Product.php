@@ -11,6 +11,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'nickname'
+    ];
+
 
     /**
      * Return official name if nickname is not set
