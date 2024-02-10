@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Product;
 use App\Models\User;
+use App\Policies\ProductPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -31,7 +33,5 @@ class AuthServiceProvider extends ServiceProvider
                return true;
            }
         });
-
-        Gate::define('entry:add', [UserPolicy::class, 'entryAdd']);
     }
 }

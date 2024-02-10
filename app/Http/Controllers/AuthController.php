@@ -57,7 +57,7 @@ class AuthController extends Controller
 
         if(Auth::guard('web')->attempt($credentials)) {
             $authenticated = User::where('email', $credentials['email'])->first();
-            return ['token' => $this->issueTokenFor($authenticated)];
+            return ['token' => $this->issueTokenFor($authenticated, abilities: $authenticated->abilities)];
         } else {
             return ['message'=>'Invalid credentials'];
         }
