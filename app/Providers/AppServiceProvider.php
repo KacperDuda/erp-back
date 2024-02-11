@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\PriceList;
+use App\Models\PriceListElement;
+use App\Observers\PriceListElementObserver;
+use App\Observers\PriceListObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        PriceList::observe(PriceListObserver::class);
     }
 }

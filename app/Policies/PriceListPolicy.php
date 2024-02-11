@@ -8,12 +8,16 @@ use Illuminate\Auth\Access\Response;
 
 class PriceListPolicy
 {
+    public function before(User $user, string $ability) {
+        return $user->tokenCan('pricelist:all');
+    }
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->tokenCan('pricelist:viewAny');
     }
 
     /**
@@ -21,7 +25,7 @@ class PriceListPolicy
      */
     public function view(User $user, PriceList $priceList): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -29,7 +33,7 @@ class PriceListPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->tokenCan('pricelist:modify');
     }
 
     /**
@@ -37,7 +41,8 @@ class PriceListPolicy
      */
     public function update(User $user, PriceList $priceList): bool
     {
-        //
+        return $user->tokenCan('pricelist:modify');
+
     }
 
     /**
@@ -45,7 +50,8 @@ class PriceListPolicy
      */
     public function delete(User $user, PriceList $priceList): bool
     {
-        //
+        return $user->tokenCan('pricelist:modify');
+
     }
 
     /**
@@ -53,7 +59,8 @@ class PriceListPolicy
      */
     public function restore(User $user, PriceList $priceList): bool
     {
-        //
+        return $user->tokenCan('pricelist:modify');
+
     }
 
     /**
@@ -61,6 +68,7 @@ class PriceListPolicy
      */
     public function forceDelete(User $user, PriceList $priceList): bool
     {
-        //
+        return $user->tokenCan('pricelist:modify');
+
     }
 }

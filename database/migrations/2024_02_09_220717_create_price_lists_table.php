@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('price_lists', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->double('multiplier')->default(1.0);
 
             $table->timestamps();

@@ -8,9 +8,20 @@ class AbilityController extends Controller
 {
     public function list(): array {
         return [
+            //
             'product:all',
             'product:viewAny',
             'product:modify',
+            //
+            'pricelist:all',
+            'pricelist:viewAny',
+            'pricelist:modify',
+
+            //
+            'pricelistelement:all',
+            'pricelistelement:viewAny',
+            'pricelistelement:modify'
+            //
         ];
     }
 }

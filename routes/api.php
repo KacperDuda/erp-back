@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PriceListController;
+use App\Http\Controllers\PriceListElementController;
 use App\Http\Controllers\ProductController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,6 +31,11 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
     });
 
     Route::apiResources([
-        'products' => ProductController::class
+        'products' => ProductController::class,
+        'pricelists' => PriceListController::class,
+        'pricelistelements' => PriceListElementController::class
     ]);
 });
+
+// for testing purposes only
+Route::get('test', [\App\Http\Controllers\TestConroller::class, 'test']);
