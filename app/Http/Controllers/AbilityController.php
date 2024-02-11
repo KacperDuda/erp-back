@@ -16,12 +16,14 @@ class AbilityController extends Controller
             'pricelist:all',
             'pricelist:viewAny',
             'pricelist:modify',
-
             //
             'pricelistelement:all',
             'pricelistelement:viewAny',
-            'pricelistelement:modify'
+            'pricelistelement:modify',
             //
+            'client:all',
+            'client:viewAny',
+            'client:modify',
         ];
     }
 }

@@ -14,10 +14,10 @@ class ClientController extends Controller
         'nickname'=>'string',
         'address_line_1'=>'string',
         'address_line_2'=>'string',
-        'additional_info'=>'string',
+        'additional_info'=>'string|nullable',
         'NIP'=>'required|numeric',
         'is_company'=>'required|boolean',
-        'comment'=>'string'
+        'comment'=>'string|nullable'
     ];
 
     public function __construct()
@@ -30,7 +30,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        return ['clients' => Client::all()];
     }
 
     /**
@@ -38,30 +38,36 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate($this->rules);
+        return ['client'=>Client::create($data)];
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show($id)
     {
-        //
+        return ['client'=>Client::findOrFail($id)];
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate($this->rules);
+        $client = Client::findOrFail($id);
+        $client->fill($data);
+        $client->save();
+        return ['client'=>$client];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        Client::destroy($id);
+        return ['message'=>'ok'];
     }
 }
