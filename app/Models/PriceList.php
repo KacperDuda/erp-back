@@ -11,6 +11,7 @@ use function PHPUnit\Framework\throwException;
 /**
  * @property mixed $id
  * @property double $multiplier
+ * @property PriceList $parent
  */
 class PriceList extends Model
 {
@@ -79,6 +80,29 @@ class PriceList extends Model
         // if there is a parent, check their price - recursive
         if($this->parent) {
             return round(($this->multiplier) * ($this->parent->priceOf($product)));
+        }
+
+        // if there is nothing, return 0
+        return 0;
+    }
+
+    public function vatOf(Product|int $product): float
+    {
+        if($product instanceof Product) {
+            $product = $product->id;
+        }
+
+        // check for price list element first
+        $price_list_element = $this->priceListElements->where('product_id', $product)->first();
+
+        // if present, return it
+        if($price_list_element) {
+            return $price_list_element['vat'];
+        }
+
+        // if there is a parent, check their price - recursive
+        if($this->parent) {
+            return $this->parent->vatOf($product);
         }
 
         // if there is nothing, return 0

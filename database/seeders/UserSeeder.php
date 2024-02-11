@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'email'=>'badmin@admin.pl',
             'password'=>Hash::make('admin'),
             'is_admin'=>false,
-            'abilities'=>[]
+            'abilities'=>['entry:limited', 'product:viewAny', 'client:viewAny']
         ]);
     }
 }
