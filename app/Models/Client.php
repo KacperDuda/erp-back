@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property PriceList $priceList
@@ -33,5 +34,15 @@ class Client extends Model
     // shortcut
     public function priceOf(Product|int $product): int {
         return $this->priceList->priceOf($product);
+    }
+
+    public function vatOf(Product|int $product): float
+    {
+        return $this->priceList->vatOf($product);
+    }
+
+    public function entries(): HasMany
+    {
+        return $this->hasMany(Entry::class);
     }
 }

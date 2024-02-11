@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasMany(PriceListElement::class);
     }
+
+    public function entries(): HasMany
+    {
+        return $this->hasMany(Entry::class);
+    }
 }

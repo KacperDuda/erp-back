@@ -24,6 +24,11 @@ class AbilityController extends Controller
             'client:all',
             'client:viewAny',
             'client:modify',
+            //
+            'entry:viewAny',
+            'entry:limited', // for workers to have up to 7 day history access
+            'entry:modify',
+            'entry:all',
         ];
     }
 }

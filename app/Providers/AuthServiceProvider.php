@@ -5,6 +5,7 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Product;
 use App\Models\User;
+use App\Policies\EntryPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -33,5 +34,11 @@ class AuthServiceProvider extends ServiceProvider
                return true;
            }
         });
+
+        // i will call MANUALLY gate guards depending on type of resource!
+        $entryPolicies = ['viewAny', 'view', 'modify'];
+        foreach ($entryPolicies as $entryPolicy) {
+            Gate::define('entry:'.$entryPolicy, [EntryPolicy::class, $entryPolicy]);
+        }
     }
 }

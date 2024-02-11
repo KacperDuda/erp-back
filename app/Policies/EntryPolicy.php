@@ -8,12 +8,27 @@ use Illuminate\Auth\Access\Response;
 
 class EntryPolicy
 {
+    protected function limitedSufficient(User $user, Entry $entry):bool
+    {
+        if($entry->posting_date >= Entry::getLimitDate() && $user->tokenCan('entry:limited'))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function before(User $user) {
+        if($user->tokenCan('entry:all'))
+        {
+            return true;
+        }
+    }
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->tokenCan('entry:viewAny');
     }
 
     /**
@@ -21,46 +36,23 @@ class EntryPolicy
      */
     public function view(User $user, Entry $entry): bool
     {
-        //
+        if($this->limitedSufficient($user, $entry)) {
+            return true;
+        }
+        return $this->viewAny($user);
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        //
-    }
+
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update/create/delete/... the model.
      */
-    public function update(User $user, Entry $entry): bool
+    public function modify(User $user, Entry $entry): bool
     {
-        //
+        if($this->limitedSufficient($user, $entry)) {
+            return true;
+        }
+        return $user->tokenCan('entry:modify');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Entry $entry): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Entry $entry): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Entry $entry): bool
-    {
-        //
-    }
 }
