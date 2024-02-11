@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProductSeeder::class,
             PriceListSeeder::class,
-            PriceListElementSeeder::class
+            PriceListElementSeeder::class,
+            ClientSeeder::class
         ]);
     }
 }

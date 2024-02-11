@@ -11,6 +11,7 @@ use function PHPUnit\Framework\throwException;
 
 /**
  * @property mixed $id
+ * @property double $multiplier
  */
 class PriceList extends Model
 {
@@ -57,6 +58,11 @@ class PriceList extends Model
         return $this->hasMany(PriceListElement::class);
     }
 
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
     public function priceOf(Product|int $product): int
     {
         if($product instanceof Product) {
@@ -71,7 +77,7 @@ class PriceList extends Model
             return $price_list_element['price'];
         }
 
-        // if there is a parent, check their
+        // if there is a parent, check their price - recursive
         if($this->parent) {
             return round(($this->multiplier) * ($this->parent->priceOf($product)));
         }
