@@ -44,7 +44,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
         $data = $request->validate([
             'name' => 'required|string',
@@ -62,7 +62,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): array
     {
         Product::destroy($id);
         return ['message'=>'OK'];
