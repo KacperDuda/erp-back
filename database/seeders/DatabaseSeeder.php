@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             PriceListSeeder::class,
             PriceListElementSeeder::class,
             ClientSeeder::class,
-            EntrySeeder::class
+            EntrySeeder::class,
+            InvoiceSeeder::class,
+            InvoiceFieldSeeder::class
         ]);
     }
 }

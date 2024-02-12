@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('invoice_fields', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('invoice_id');
+            $table->string('product_name');
+            $table->integer('amount');
+            $table->integer('unit_price');
+            $table->integer('vat');
             $table->timestamps();
+
+            $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();
         });
     }
 

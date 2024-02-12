@@ -8,12 +8,17 @@ use Illuminate\Auth\Access\Response;
 
 class InvoicePolicy
 {
+    public function before(User $user) {
+        if($user->tokenCan('invoice:all')) {
+            return true;
+        }
+    }
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->tokenCan('invoice:viewAny');
     }
 
     /**
@@ -21,7 +26,7 @@ class InvoicePolicy
      */
     public function view(User $user, Invoice $invoice): bool
     {
-        //
+        return $this->viewAny($user);
     }
 
     /**
@@ -29,7 +34,7 @@ class InvoicePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->tokenCan('invoice:modify');
     }
 
     /**
@@ -37,7 +42,7 @@ class InvoicePolicy
      */
     public function update(User $user, Invoice $invoice): bool
     {
-        //
+        return $user->tokenCan('invoice:modify');
     }
 
     /**
@@ -45,7 +50,7 @@ class InvoicePolicy
      */
     public function delete(User $user, Invoice $invoice): bool
     {
-        //
+        return $user->tokenCan('invoice:modify');
     }
 
     /**
@@ -53,7 +58,7 @@ class InvoicePolicy
      */
     public function restore(User $user, Invoice $invoice): bool
     {
-        //
+        return $user->tokenCan('invoice:modify');
     }
 
     /**
@@ -61,6 +66,6 @@ class InvoicePolicy
      */
     public function forceDelete(User $user, Invoice $invoice): bool
     {
-        //
+        return $user->tokenCan('invoice:modify');
     }
 }

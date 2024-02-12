@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class InvoiceFieldController extends Controller
 {
+    protected $rules = [
+        'invoice_id'=>'required|integer',
+        'product_name'=>'required|string',
+        'amount'=>'required|integer',
+        'unit_price'=>'required|integer',
+        'vat'=>'required|numeric',
+    ];
+    public function __construct()
+    {
+        $this->authorizeResource(InvoiceField::class);
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -6,6 +6,7 @@ use App\Models\PriceList;
 use App\Models\PriceListElement;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 use Nette\Utils\Random;
 
@@ -24,8 +25,9 @@ class PriceListElementSeeder extends Seeder
                 PriceListElement::create([
                     'product_id' => $product->id,
                     'price_list_id' => $pirceList->id,
-                    'price' => mt_rand(120, 540),
-                    'VAT'=>0.23
+                    'price' => mt_rand(100, 500),
+//                    'VAT' => 23
+                    'VAT'=> [23, 23, 15][mt_rand(0,2)]
                 ]);
             }
         }

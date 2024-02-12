@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EntryController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoiceFieldController;
 use App\Http\Controllers\PriceListController;
 use App\Http\Controllers\PriceListElementController;
 use App\Http\Controllers\ProductController;
@@ -37,7 +39,9 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
         'pricelists' => PriceListController::class,
         'pricelistelements' => PriceListElementController::class,
         'clients' => ClientController::class,
-        'entries' => EntryController::class
+        'entries' => EntryController::class,
+        'invoices' => InvoiceController::class,
+        'invoicefields'=> InvoiceFieldController::class
     ]);
     Route::post('entries/list', [EntryController::class, 'list']);
 });

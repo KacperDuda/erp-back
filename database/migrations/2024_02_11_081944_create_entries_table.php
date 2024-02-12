@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->integer('unit_price');
-            $table->double('vat');
+            $table->integer('vat');
             $table->boolean('left');
             $table->date('posting_date');
             $table->timestamps();
