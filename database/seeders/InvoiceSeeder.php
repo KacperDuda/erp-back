@@ -14,18 +14,7 @@ class InvoiceSeeder extends Seeder
      */
     public function run(): void
     {
-        $generator = new Generator();
-        $generator->invoices(
-            now()->year,
-            now()->month,
-            User::findOrFail(1)->name,
-            now()->startOfMonth(), // 00:00:00
-            now()->endOfMonth(), // 23:59:59
-            now(),
-            now()->addDays(14)
-        );
-
-        $generator->invoices(
+        Generator::invoices(
             now()->year,
             now()->month,
             User::findOrFail(1)->name,

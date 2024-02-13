@@ -11,6 +11,7 @@ use Illuminate\Support\Collection as BaseCollection;
 
 /**
  * @property Collection<InvoiceField> $invoiceFields
+ * @property integer $client_id
  */
 class Invoice extends Model
 {
@@ -28,6 +29,20 @@ class Invoice extends Model
         'is_sent',
         'client_id',
     ];
+
+    protected $appends = ['name'];
+
+    public static function nextSerial(int $year): int {
+        return 1 + (Invoice::where('year', $year)->orderBy('id', 'desc')->first()?->serial ?: 0);
+    }
+
+    public function name(): Attribute {
+        return Attribute::make(get: function ($value, $attr) {
+            return "F/".$attr['year']."/".
+                sprintf("%03d",$attr['serial'])."/".
+                sprintf("%02d", $attr['month']);
+        });
+    }
 
     public function invoiceFields(): HasMany
     {

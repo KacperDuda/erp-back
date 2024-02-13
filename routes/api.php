@@ -34,6 +34,7 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
             ->withoutMiddleware('auth:sanctum');
     });
 
+    // standard resource paths
     Route::apiResources([
         'products' => ProductController::class,
         'pricelists' => PriceListController::class,
@@ -43,7 +44,12 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
         'invoices' => InvoiceController::class,
         'invoicefields'=> InvoiceFieldController::class
     ]);
+
+    // for searching for specific days
     Route::post('entries/list', [EntryController::class, 'list']);
+
+    // invoice generation
+    Route::post('invoices/generate', [InvoiceController::class, 'generate']);
 });
 
 // for testing purposes only

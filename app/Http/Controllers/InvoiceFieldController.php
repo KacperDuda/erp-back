@@ -24,7 +24,8 @@ class InvoiceFieldController extends Controller
      */
     public function index()
     {
-        //
+        // we receive fields with invoice - no need to implement to
+        throw new \Exception("Method GET /invoiceFields not implemented");
     }
 
     /**
@@ -32,7 +33,9 @@ class InvoiceFieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return ['invoice_field' => InvoiceField::create(
+            $request->validate($this->rules)
+        )];
     }
 
     /**
@@ -40,7 +43,7 @@ class InvoiceFieldController extends Controller
      */
     public function show(InvoiceField $invoiceField)
     {
-        //
+        throw new \Exception("Method GET /invoiceFields/{id} not implemented");
     }
 
     /**
@@ -48,14 +51,17 @@ class InvoiceFieldController extends Controller
      */
     public function update(Request $request, InvoiceField $invoiceField)
     {
-        //
+        $invoiceField->fill($request->validate($this->rules));
+        $invoiceField->save();
+        return ['invoice_field' => $invoiceField];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InvoiceField $invoiceField)
+    public function destroy($id)
     {
-        //
+        InvoiceField::destroy($id);
+        return ['message'=>'ok'];
     }
 }
