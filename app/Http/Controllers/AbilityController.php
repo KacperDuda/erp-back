@@ -16,7 +16,7 @@ class AbilityController extends Controller
             'pricelist:all',
             'pricelist:viewAny',
             'pricelist:modify',
-            //
+            // soon to delete becaue priceList is enough
             'pricelistelement:all',
             'pricelistelement:viewAny',
             'pricelistelement:modify',
@@ -29,6 +29,11 @@ class AbilityController extends Controller
             'entry:limited', // for workers to have up to 7 day history access
             'entry:modify',
             'entry:all',
+            // invoice and invoice_fields
+            'invoice:viewAny',
+            'invoice:view',
+            'invoice:modify',
+            'invoice:all',
         ];
     }
 }

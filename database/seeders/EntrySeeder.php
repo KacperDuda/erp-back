@@ -18,12 +18,14 @@ class EntrySeeder extends Seeder
         $clients = Client::all();
         $products = Product::all();
         $days = [10,9,8,7,6,5,4,3,2,1,0];
+//        $days = [0];
+//          $days = [];
 
 
         foreach ($days as $day) {
             foreach ($products as $product) {
                 foreach ($clients as $client) {
-                    for ($i = 0; $i < max(rand(0, 5)-2, 0); $i++) { // random amount of entries, i want more to be empty
+                    for ($i = 0; $i < max(rand(0, 5)-3, 0); $i++) { // random amount of entries, i want more to be empty
                         $entry = new Entry;
                         $entry->fill([
                             'amount'=>rand(1,4),
