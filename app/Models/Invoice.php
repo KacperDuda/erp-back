@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
+use App\Services\Invoices\PDFCreator;
+use Illuminate\Contracts\Mail\Attachable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as BaseCollection;
+use Illuminate\Mail\Attachment;
+
 
 /**
  * @property Collection<InvoiceField> $invoiceFields
  * @property integer $client_id
  */
-class Invoice extends Model
+class Invoice extends Model implements Attachable
 {
     use HasFactory;
 
@@ -58,6 +63,11 @@ class Invoice extends Model
         return $this->taxLevels()->sum('gross');
     }
 
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
+
     public function taxLevels(): BaseCollection
     {
         return $this->invoiceFields->groupBy('vat')->map(function ($group, $key) {
@@ -73,5 +83,17 @@ class Invoice extends Model
     public function tax(): int
     {
         return $this->grossPrice() - $this->netPrice();
+    }
+
+
+    public function toMailAttachment(): Attachment
+    {
+        return Attachment::fromData(
+            fn() => PDFCreator::fromInvoice(
+                $this,
+                "Oryginał"
+            )->output(),
+            $this->name
+        )->withMime('application/pdf');
     }
 }

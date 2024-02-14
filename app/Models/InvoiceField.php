@@ -25,6 +25,11 @@ class InvoiceField extends Model
         'vat',
     ];
 
+    protected $appends = [
+        'net',
+        'gross'
+    ];
+
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);
@@ -39,7 +44,7 @@ class InvoiceField extends Model
 
     public function gross(): Attribute {
         return Attribute::make(get: function (mixed $value, array $attr) {
-            return round($attr['net'] * (1.0 + ($attr['vat'])/100), 0);
+            return round($attr['amount'] * $attr['unit_price'] * (1.0 + ($attr['vat'])/100), 0);
         });
     }
 

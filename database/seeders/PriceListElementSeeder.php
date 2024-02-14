@@ -26,8 +26,8 @@ class PriceListElementSeeder extends Seeder
                     'product_id' => $product->id,
                     'price_list_id' => $pirceList->id,
                     'price' => mt_rand(100, 500),
-//                    'VAT' => 23
-                    'VAT'=> [23, 23, 15][mt_rand(0,2)]
+                    'VAT' => 23
+//                    'VAT'=> [23, 23, 15][mt_rand(0,2)]
                 ]);
             }
         }

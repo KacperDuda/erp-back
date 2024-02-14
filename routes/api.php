@@ -34,6 +34,9 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
             ->withoutMiddleware('auth:sanctum');
     });
 
+    // invoice test
+    Route::get('invoices/test', [InvoiceController::class, 'test'])->withoutMiddleware('auth:sanctum');
+
     // standard resource paths
     Route::apiResources([
         'products' => ProductController::class,
@@ -49,7 +52,13 @@ Route::group(['middleware'=>['auth:sanctum']], function() {
     Route::post('entries/list', [EntryController::class, 'list']);
 
     // invoice generation
-    Route::post('invoices/generate', [InvoiceController::class, 'generate']);
+    Route::post('invoices/generate', [InvoiceController::class, 'generate']); // MAKE AUTHENTICATION FOR THAT
+    // invoice stream to browser
+    Route::get('invoices/stream/{id}/{type?}', [InvoiceController::class, 'stream']); // MAKE AUTHENTICATION FOR THAT
+
+    // send invoices to clients
+    Route::post('invoices/send', [InvoiceController::class, 'send']); // MAKE AUTHENTICATION FOR THAT
+
 });
 
 // for testing purposes only

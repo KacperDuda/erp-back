@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceApproved;
 use App\Models\Invoice;
 use App\Services\Invoices\Generator;
+use App\Services\Invoices\PDFCreator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceController extends Controller
 {
@@ -109,5 +112,43 @@ class InvoiceController extends Controller
             due_date: Carbon::createFromFormat('Y-m-d', $data['due_date']),
             clients: $data['client_id']
         )];
+    }
+
+    public function stream(int $id, string $type = "Oryginał") {
+        $invoice = Invoice::findOrFail($id);
+
+        $pdf = PDFCreator::fromInvoice(
+            $invoice,
+            $type
+        );
+
+        return $pdf->stream('faktura.pdf');
+    }
+
+    /**
+     * Send invoices to clients, accepts array of ids of invoices to be sent
+     * @return array{message: string}
+     */
+    public function send(Request $request): array
+    {
+        $data = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer'
+        ])['ids'];
+
+        $invoices = Invoice::whereIn(
+            'id',$data
+        )->get();
+
+        foreach ($invoices as $invoice) {
+            Mail::to($invoice->client)
+            ->bcc('test@gmail.com')
+            ->send(new InvoiceApproved($invoice));
+
+            $invoice->is_sent = true;
+            $invoice->save();
+        }
+
+        return ['message'=>'ok'];
     }
 }

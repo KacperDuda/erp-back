@@ -73,7 +73,7 @@ class Generator
     )
     {
         // we have completed invoice, now only create fields
-        Entry                                                          // we want entry
+        Entry                                                          // we want entries
         ::where('client_id', $invoice->client_id)                      // with a proper client
         ->whereBetween('posting_date', [$start->format('Y-m-d'), $end->format('Y-m-d')])                 // within a given date range
         ->get()                                                        // retrieve from DB

@@ -2,25 +2,28 @@
 
 namespace App\Mail;
 
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Invoice extends Mailable
+class InvoiceApproved extends Mailable
 {
-    // send email to the client
-
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(
+        protected Invoice $invoice
+    )
     {
-        //
+
     }
 
     /**
@@ -29,7 +32,8 @@ class Invoice extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Invoice',
+            from: new Address('faktury@pralniakrystyna.pl', 'Pralnia Krystyna'),
+            subject: "Faktura ".$this->invoice->name,
         );
     }
 
@@ -39,17 +43,22 @@ class Invoice extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.invoice',
+            with: [
+                'invoice'=>$this->invoice
+            ]
         );
     }
 
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            $this->invoice
+        ];
     }
 }

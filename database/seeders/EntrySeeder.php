@@ -18,7 +18,7 @@ class EntrySeeder extends Seeder
         $clients = Client::all();
         $products = Product::all();
         $days = [10,9,8,7,6,5,4,3,2,1,0];
-//        $days = [0];
+        $days = [0];
 //          $days = [];
 
 
