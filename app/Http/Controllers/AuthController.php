@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -27,11 +28,10 @@ class AuthController extends Controller
 
     /**
      * Retrieve currently authenticated user
-     * @return array
-     */
-    public function user(): array
+     *      */
+    public function user(): ?Authenticatable
     {
-        return ['user' => Auth::guard('sanctum')->user()];
+        return Auth::guard('sanctum')->user();
     }
 
     /**
@@ -61,5 +61,9 @@ class AuthController extends Controller
         } else {
             return ['message'=>'Invalid credentials'];
         }
+    }
+
+    public function isAuthenticated(): array {
+        return ['is_authenticated'=> !!(Auth::guard('sanctum')->user())];
     }
 }
