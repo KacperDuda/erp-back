@@ -11,9 +11,9 @@ class PDFCreator
     private function __construct(){}
 
     public static $info = [
-        "Pralnia Krystyna",
-        "ul. Nowotarska 212",
-        "34-431 Waksmund",
+        "Nazwa firmy",
+        "adres",
+        "kod i miasto",
         "NIP 1234567890",
         "nr konta:",
         "12 1212 1212 1212 1212 1212"

@@ -32,7 +32,7 @@ class InvoiceApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('faktury@pralniakrystyna.pl', 'Pralnia Krystyna'),
+            from: new Address('faktury@system.pl', 'System ERP'),
             subject: "Faktura ".$this->invoice->name,
         );
     }
