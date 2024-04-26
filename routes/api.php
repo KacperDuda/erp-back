@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware'=>['auth:sanctum']], function() {
     Route::prefix('auth')->group(function() {
+        Route::get('isAuthenticated', [AuthController::class, 'isAuthenticated'])->withoutMiddleware('auth:sanctum');
         Route::get('user', [AuthController::class, 'user']);
         Route::get('token', [AuthController::class, 'token']);
 
